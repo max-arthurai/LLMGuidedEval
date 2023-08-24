@@ -17,20 +17,32 @@ DONE:
 
 
 TODO:
+
+For each task and each model, we have 31x3 = 93 evaluations and 110 A/B tests. So lets say ~200 evaluations.
+
+We have 2 tasks and 5 models, which means we have a total of ~2000 evaluations to conduct.
+
+If an evaluation takes ~20 seconds, we have ~40,000 seconds ~= 11 hours of computation to do.
   
-- use each LLM to provide written feedback for every LLM generation
+- use each LLM to provide written feedback for every response
 
-- use each LLM to provide a binary (good/bad) feedback for every LLM generation
+  * **31 responses**
 
-- use each LLM to provide a letter grade (A/B/C/D/F) for every LLM generation
+- use each LLM to provide a binary (good/bad) feedback for every response
 
-- use each LLM to A/B test every pair of LLM generations 
+  * **31 responses**
 
-   * to reduce the size of this experiment, lets maybe drop the triplets of each generation so that we have 11 choose 2 = 55 pairs instead of 31 choose 2 = 465 pairs to A/B test
+- use each LLM to provide a letter grade (A/B/C/D/F) for every response
+
+  * **31 responses**
+
+- use each LLM to A/B test every pair of responses
+
+  * to reduce the size of this experiment, lets maybe drop the triplets of each generation so that we have 11 choose 2 = 55 pairs instead of 31 choose 2 = 465 pairs to A/B test
  
-   * for robustness, lets run each A/B test twice, swapping each time the order in which we place the A and B options.
+  * for robustness, lets run each A/B test twice, swapping each time the order in which we place the A and B options.
    
-   * So 55 pairs x 2 tests per pair = 110 A/B tests total will need to get done
+  * So 55 pairs x 2 tests per pair = **110 A/B tests** total will need to get done for each inference
 
 # Models
 
