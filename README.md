@@ -17,12 +17,6 @@ DONE:
 
 
 TODO:
-
-For each task and each model, we have 31x3 = 93 evaluations and 110 A/B tests. So lets say ~200 evaluations.
-
-We have 2 tasks and 5 models, which means we have a total of ~2000 evaluations to conduct.
-
-If an evaluation takes ~20 seconds, we have ~40,000 seconds ~= 11 hours of computation to do.
   
 - use each LLM to provide written feedback for every response
 
