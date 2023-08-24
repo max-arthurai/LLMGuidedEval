@@ -8,9 +8,11 @@ DONE: LLM response generation
 
 TODO:
 
-- extract the actual rephrased text from the results dataframes (e.g. claude rephrasing the ground truth summary says "Here is my re-writing of the text: <new text>")
+- extract the actual rephrased text from the results dataframes 
 
   * Claude:	Here is my attempt at rewriting the text with new language while preserving the meaning and information
+ 
+  * LLaMa2: Here is my attempt at rewriting the text with new language while preserving the meaning and information
   
 - use each LLM to provide written feedback for every LLM generation
 
