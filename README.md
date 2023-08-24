@@ -26,6 +26,10 @@ TODO:
 
   * **31 responses**
 
+- use each LLM to provide a integer (1-10) feedback for every response
+
+  * **31 responses**
+
 - use each LLM to provide a letter grade (A/B/C/D/F) for every response
 
   * **31 responses**
