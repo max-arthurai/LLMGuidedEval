@@ -2,6 +2,22 @@
 
 This is where I am proposing we centralize our work for the AIIA talk. Then after the talk, when we want to centralize our LLM guided eval research across the team more broadly we can make a copy of this repo owned by arthurai instead of me
 
+# Action items:
+
+DONE: LLM response generation
+
+TODO:
+
+- extract the actual rephrased text from the results dataframes (e.g. claude rephrasing the ground truth summary says "Here is my re-writing of the text: <new text>")
+  
+- use each LLM to provide written feedback for every LLM generation
+
+- use each LLM to provide a binary (good/bad) feedback for every LLM generation
+
+- use each LLM to provide a letter grade (A/B/C/D/F) for every LLM generation
+
+- use each LLM to A/B test every pair of LLM generations (to reduce the size of this experiment, lets maybe drop the triplets of each generation so that we have 11 choose 2 = 55 pairs instead of 31 choose 2 = 465 pairs to A/B test)
+
 # Models
 
 gpt-3.5-turbo & gpt4 (OpenAI), claude-2 (Anthropic), command (Cohere), LLaMa2 (Meta)
