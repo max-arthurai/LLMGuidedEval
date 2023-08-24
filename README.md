@@ -26,7 +26,7 @@ Each model was configured to generate with 256* maximum new tokens and a tempera
 
 # Data
 
-## Sumamrization
+## Summarization
 
 `get_news.py` will use an API key I have registered with NewsAPI to fetch some articles. I chose 5 of these articles and wrote a ground truth summary for each one. I gave each LLM 3 attempts to summarize each article. Then, I gave each LLM 3 attempts at re-writing the ground truth summary that I wrote.
 
