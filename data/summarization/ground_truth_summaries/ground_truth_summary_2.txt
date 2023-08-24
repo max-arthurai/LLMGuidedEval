@@ -1,0 +1,1 @@
+Python execution is now available as a feature in Microsoft Excel. The integration will allow data analysts to write Python in their Excel spreadsheets and execute the jobs in Microsoft Cloud for security.

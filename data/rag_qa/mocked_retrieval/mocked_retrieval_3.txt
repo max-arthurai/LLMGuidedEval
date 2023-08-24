@@ -1,0 +1,21 @@
+B.1.1 Global warming28 will continue to increase in the near term (2021–2040) mainly due to increased cumulative
+CO2 emissions in nearly all considered scenarios and modelled pathways. In the near term, global warming is more
+likely than not to reach 1.5°C even under the very low GHG emission scenario (SSP1-1.9) and likely or very likely to
+exceed 1.5°C under higher emissions scenarios. In the considered scenarios and modelled pathways, the best estimates
+of the time when the level of global warming of 1.5°C is reached lie in the near term29. Global warming declines back
+to below 1.5°C by the end of the 21st century in some scenarios and modelled pathways (see B.7). The assessed
+climate response to GHG emissions scenarios results in a best estimate of warming for 2081–2100 that spans a range
+from 1.4°C for a very low GHG emissions scenario (SSP1-1.9) to 2.7°C for an intermediate GHG emissions scenario
+(SSP2-4.5) and 4.4°C for a very high GHG emissions scenario (SSP5-8.5)30, with narrower uncertainty ranges31 than for
+corresponding scenarios in AR5. {Cross-Section Boxes 1 and 2, 3.1.1, 3.3.4, Table 3.1, 4.3} (Box SPM.1)
+B.5.2 For every 1000 GtCO2 emitted by human activity, global surface temperature rises by 0.45°C (best estimate, with a likely
+range from 0.27°C to 0.63°C). The best estimates of the remaining carbon budgets from the beginning of 2020 are
+500 GtCO2 for a 50% likelihood of limiting global warming to 1.5°C and 1150 GtCO2 for a 67% likelihood of limiting
+warming to 2°C40. The stronger the reductions in non-CO2 emissions, the lower the resulting temperatures are for a given
+remaining carbon budget or the larger remaining carbon budget for the same level of temperature change41. {3.3.1}
+A.4 Policies and laws addressing mitigation have consistently expanded since AR5. Global GHG
+emissions in 2030 implied by nationally determined contributions (NDCs) announced by October
+2021 make it likely that warming will exceed 1.5°C during the 21st century and make it harder
+to limit warming below 2°C. There are gaps between projected emissions from implemented
+policies and those from NDCs and finance flows fall short of the levels needed to meet climate
+goals across all sectors and regions. (high confidence) {2.2, 2.3, Figure 2.5, Table 2.2}

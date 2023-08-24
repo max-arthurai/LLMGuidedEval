@@ -1,0 +1,23 @@
+Title: Python is coming to Microsoft Excel
+
+Eugene Mymrin/Getty Images
+
+Ever wished you could do more with Microsoft Excel? Microsoft just announced the release of a public preview of Python in Excel, which would allow users to add Python code directly into a spreadsheet.
+
+This would enable data analysts, engineers, marketers, and students learning data science to work with Python code to perform complex statistical analysis, advanced visualizations, predictive analytics, and machine learning in Excel.
+
+Also: How to use ChatGPT to write Excel formulas
+
+Users will be able to enter Python code directly into cells using the new =PY function, as Python will be integrated directly into the Excel grid, with no need to install additional software.
+
+Microsoft explains that the new functionality leverages the Anaconda distribution of Python, an enterprise geared to data scientists and engineers that is also beginner-friendly. Anaconda includes many pre-packaged libraries and packages like pandas, Matplotlib, scikit-learn, NumPy, and SciPy.
+
+Date extraction using regular expressions. Microsoft
+
+As a secure operation, Microsoft says Python in Excel runs on the Microsoft Cloud with enterprise-level security within the Microsoft 365 experience. This means that the code is executed on the Microsoft Cloud and not locally, in an isolated container using Azure Container Instances and separate from other processes to diminish the risk of unauthorized access.
+
+Also: How to use ChatGPT to write code
+
+The data in users' workbooks is controlled through the specific functions xl()and =PY() to ensure data is secure and only authorized operations are performed.
+
+The public preview of the Python integration on Microsoft Excel will be available to Microsoft 365 Insiders using the Beta Channel in Excel for Windows.
