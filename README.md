@@ -24,7 +24,13 @@ TODO:
 
 - use each LLM to provide a letter grade (A/B/C/D/F) for every LLM generation
 
-- use each LLM to A/B test every pair of LLM generations (to reduce the size of this experiment, lets maybe drop the triplets of each generation so that we have 11 choose 2 = 55 pairs instead of 31 choose 2 = 465 pairs to A/B test)
+- use each LLM to A/B test every pair of LLM generations 
+
+   * to reduce the size of this experiment, lets maybe drop the triplets of each generation so that we have 11 choose 2 = 55 pairs instead of 31 choose 2 = 465 pairs to A/B test
+ 
+   * for robustness, lets run each A/B test twice, swapping each time the order in which we place the A and B options.
+   
+   * So 55 pairs x 2 tests per pair = 110 A/B tests total will need to get done
 
 # Models
 
