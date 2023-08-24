@@ -4,15 +4,19 @@ This is where I am proposing we centralize our work for the AIIA talk. Then afte
 
 # Action items:
 
-DONE: LLM response generation
+DONE: 
 
-TODO:
+- LLM response generation
 
-- extract the actual rephrased text from the results dataframes 
+- extract the actual rephrased text from the results dataframes and get rid of the "Here is my rephrased text" preamble, for example:
 
   * Claude:	Here is my attempt at rewriting the text with new language while preserving the meaning and information
  
   * LLaMa2: Here is my attempt at rewriting the text with new language while preserving the meaning and information
+
+
+
+TODO:
   
 - use each LLM to provide written feedback for every LLM generation
 
