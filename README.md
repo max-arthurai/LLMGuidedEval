@@ -6,7 +6,7 @@ This is where I am proposing we centralize our work for the AIIA talk. Then afte
 
 gpt-3.5-turbo & gpt4 (OpenAI), claude-2 (Anthropic), command (Cohere), LLaMa2 (Meta)
 
-Each model was configured to generate with 256* maximum new tokens and a temperature of 0.7 (* I accidentally ran LLaMa2 with 500 maximum new tokens, but the average generations came out similar to the other models that I did not re-run them yet.)
+Each model was configured to generate with 256* maximum new tokens and a temperature of 0.7 (* I accidentally ran LLaMa2 with 500 maximum new tokens, but the average generations came out similar to the other models so I did not re-run them yet.)
 
 # Data
 
