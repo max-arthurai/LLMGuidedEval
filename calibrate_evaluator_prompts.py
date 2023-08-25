@@ -94,14 +94,14 @@ tasks = {
 baseline_instructions = {
     "summary" : {
         "written" : "Give one sentence of feedback on the summary with respect to its relevance, importance, and accuracy. Be extremely strict and critical when it comes to relevance, importance, and accuracy.",
-        "integer" : "Give a score 0-10 to this summary. 0 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. Only respond with the score, nothing else.",
-        "lettergrade" : "Give a letter grade (A+ through F) to this summary. F means irrelevant, C means errors, A+ means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. Only respond with a letter grade, nothing else.",
+        "integer" : "Give a score 0-10 to this summary. 0 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. ALWAYS start your feedback by specifying the score, followed by an explanation of why you have given this score. For instance, 'Score: 5. The summary is only partially correct.'",
+        "lettergrade" : "Give a letter grade (A+ through F) to this summary. F means irrelevant, C means errors, A+ means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. ALWAYS start your feedback by specifying the grade, followed by an explanation of why you have given this grade. For instance, 'Grade: B-. The summary is only partially correct.'",
         "abtest" : "Choose the better summary on the basis of relevance, importance, and accuracy. Only respond with '0' or '1', nothing else."
     },
     "qa" : {
         "written" : "Give one sentence of feedback on the answer with respect to its correctness. Be extremely strict and critical when it comes to correctness.",
-        "integer" : "Give a score 0-10 to this answer. 0 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. Only respond with the score, nothing else.",
-        "lettergrade" : "Give a letter grade (A+ through F) to this answer. F means irrelevant, C means errors, A+ means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. Only respond with a letter grade, nothing else.",
+        "integer" : "Give a score 0-10 to this answer. 0 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. ALWAYS start your feedback by specifying the score, followed by an explanation of why you have given this score. For instance, 'Score: 5. The answer is only partially correct.'",
+        "lettergrade" : "Give a letter grade (A+ through F) to this answer. F means irrelevant, C means errors, A+ means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. ALWAYS start your feedback by specifying the grade, followed by an explanation of why you have given this grade. For instance, 'Grade: B-. The answer is only partially correct.'",
         "abtest" : "Choose the better answer on the basis of correctness. Only respond with '0' or '1', nothing else."
     }
 }
