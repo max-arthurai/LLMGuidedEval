@@ -19,7 +19,7 @@ class LlaMa2:
     def __call__(self, input_text: str):
         replicate_output_generator = replicate.run(
             f"replicate/{self.model_name}",
-            input={"prompt": input_text, "temperature" : 0.7, "max_tokens" : 256, "absdfg" : 10}
+            input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 256}
         )
         replicate_output = "".join([x for x in replicate_output_generator])
         return replicate_output
@@ -108,7 +108,7 @@ def save_question_answering_data(questions, mocked_retrievals, ground_truth_answ
             qa_df[f"{m}_rephrase_gt_{i}"] = rephrased_gt_answers[m][i]
     qa_df.to_csv("data/rag_qa/aug2023_ipcc_qa.csv")
 
-def make_llm_response_dataset(n_data = 5, n_attempts = 3):
+def make_llm_response_dataset_from_scratch(n_data = 5, n_attempts = 3):
 
     articles, ground_truth_summaries = load_summarization_data(n_data)
     questions, mocked_retrievals, ground_truth_answers = load_question_answering_data(n_data)
@@ -150,4 +150,3 @@ def make_llm_response_dataset(n_data = 5, n_attempts = 3):
 
                 save_question_answering_data(questions, mocked_retrievals, ground_truth_answers, answers, rephrased_gt_answers, n_attempts)
 
-make_llm_response_dataset()
