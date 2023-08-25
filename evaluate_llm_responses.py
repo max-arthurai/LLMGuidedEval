@@ -8,10 +8,10 @@ import replicate
 from time import time
 
 # define models
-gpt35 = ChatOpenAI(temperature=0.7, max_tokens=256)
-gpt4 = ChatOpenAI(model='gpt-4', temperature=0.7, max_tokens=256)
-claude = ChatAnthropic(temperature=0.7, max_tokens_to_sample=256)
-command = Cohere(temperature=0.7, max_tokens=256)
+gpt35 = ChatOpenAI(temperature=0.7, max_tokens=50)
+gpt4 = ChatOpenAI(model='gpt-4', temperature=0.7, max_tokens=50)
+claude = ChatAnthropic(temperature=0.7, max_tokens_to_sample=50)
+command = Cohere(temperature=0.7, max_tokens=50)
 class LlaMa2:
     """Callable LLaMa2 using replicate"""
     def __init__(self, model_name: str):
@@ -19,7 +19,7 @@ class LlaMa2:
     def __call__(self, input_text: str):
         replicate_output_generator = replicate.run(
             f"replicate/{self.model_name}",
-            input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 256}
+            input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 50}
         )
         replicate_output = "".join([x for x in replicate_output_generator])
         return replicate_output
@@ -46,74 +46,84 @@ tasks = {
     "summary" : {
         "written" : PromptTemplate.from_template(
             "You are giving feedback on the quality of a summary."
+            "Give one sentence of feedback on the summary with respect to its quality. Be extremely harsh, strict, and critical."
             "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "Give feedback on the strengths and/or weaknesses of the summary."
-            "\n=Feedback=\n"), 
-        "binary" : PromptTemplate.from_template(
-            "You are giving a label based on the quality of a summary."
-            "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "Give a one-word quality label for the summary, either 'good' or 'bad'. Only respond with 'good' or 'bad', nothing else."
-            "\n=Quality label=\n"), 
+            "\n=Feedback=\n "), 
         "integer" : PromptTemplate.from_template(
             "You are giving a score based on the quality of a summary."
+            "Give a score 1-10 to this summary. 1 means irrelevant, 5 means errors, 10 means no possible improvements."
+            "Be extremely harsh, strict, and critical. Only respond with the score, nothing else."
+            "\n=Examples=\n"
+            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an amazing summary\n=\n=Score=\n 9"
+            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an awful summary\n=\n=Score=\n 2"
+            "\n=End Examples=\n"
             "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "Give a score 1-10 to this summary. 1 means irrelevant, 4 means no terrible errors but missing a basic thing or two, 6 means nothing wrong but not great, 8 means great, 10 means no possible improvements."
-            "Only respond with the score, nothing else."
-            "\n=Score=\n"), 
+            "\n=Score=\n "), 
         "lettergrade" : PromptTemplate.from_template(
             "You are giving a grade based on the quality of a summary."
+            "Give a letter grade (A+ through F) to this summary. F means irrelevant, C means errors, A+ means no possible improvements."
+            "Be extremely harsh, strict, and critical. Only respond with a letter grade, nothing else."
+            "\n=Examples=\n"
+            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an amazing summary\n=\n=Grade=\n A"
+            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an awful summary\n=\n=Grade=\n D"
+            "\n=End Examples=\n"
             "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "Give a letter grade (A+ through F) to this summary. F means irrelevant, C means no terrible errors but missing a basic thing or two, B means nothing wrong, A means fantastic, A+ means no possible improvements."
-            "Only respond with a letter grade, nothing else."
-            "\n=Grade=\n"), 
+            "\n=Grade=\n "), 
         "abtest" : PromptTemplate.from_template(
             "You are choosing between two summaries based on how well they summarize an article."
-            "\n=Article=\n{input_text}\n=Attempted Summary 0=\n{output_text_0}\n=Attempted Summary 1=\n{output_text_1}\n=\n"
-            "Choose the better summary, Summary 0 or Summary 1. Only respond with '0' or '1', nothing else. "
-            "\n=Choice=\n"), 
+            "Choose the better summary. Only respond with '0' or '1', nothing else."
+            "\nExamples\n"
+            "\n=Article=\npretend this is a sample article\n=Summary 0=\npretend this is a bad summary\n=Summary 1=\npretend this is a good summary\n=\n=Choice=\n 1"
+            "\n=Article=\npretend this is a sample article\n=Summary 0=\npretend this is a good summary\n=Summary 1=\npretend this is a bad summary\n=\n=Choice=\n 0"
+            "\n=End Examples\n"
+            "\n=Article=\n{input_text}\n=Summary 0=\n{output_text_0}\n=Summary 1=\n{output_text_1}\n=\n"
+            "\n=Choice=\n "), 
     },
     "qa" : {
         "written" : PromptTemplate.from_template(
-            "You are giving feedback on the quality of an answer to a question."
+            "You are giving feedback on the correctness of an answer to a question."
             "\n=Context=\n{context}\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "Give feedback on the strengths and/or weaknesses of the answer."
-            "\n=Feedback=\n"), 
-        "binary" : PromptTemplate.from_template(
-            "You are giving a label based on the quality of an answer to a question."
-            "=Context=\n{context}\n\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "Give a one-word quality label (either 'good' or 'bad') to this answer. Only respond with 'good' or 'bad', nothing else."
-            "\n=Quality label=\n"), 
+            "Give one sentence of feedback on the answer with respect to its correctness. Be extremely harsh, strict, critical."
+            "\n=Feedback=\n "), 
         "integer" : PromptTemplate.from_template(
-            "You are giving a score based on the quality of an answer to a question."
+            "You are giving a score based on the correctness of an answer to a question."
             "=Context=\n{context}\n\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "Give a score 1-10 to this answer. 1 means irrelevant, 4 means no terrible errors but missing a basic thing or two, 6 means nothing wrong but not great, 8 means great, 10 means no possible improvements."
-            "Only respond with the score, nothing else."
-            "\n=Score=\n"), 
+            "Give a score 1-10 to this answer. 1 means irrelevant, 5 means errors, 10 means no possible improvements."
+            "Be extremely harsh, strict, and critical. Only respond with the score, nothing else."
+            "\n=Score=\n "), 
         "lettergrade" : PromptTemplate.from_template(
-            "You are giving a grade based on the quality of an answer to a question."
+            "You are giving a grade based on the correctness of an answer to a question."
+            "Give a letter grade (A+ through F) to this answer. F means irrelevant, C means errors, A+ means no possible improvements."
+            "Be extremely harsh, strict, and critical. Only respond with a letter grade, nothing else."
+            "\nExamples\n"
+            "\n=Context=\npretend this is a sample context\n=Question=\npretend this is a sample question\n=Attempted Answer=\npretend this is an amazing answer\n=\n=Grade=\n A"
+            "\n=Context=\npretend this is a sample context\n=Question=\npretend this is a sample question\n=Attempted Answer=\npretend this is an atrocious answer\n=\n=Grade=\n D"
+            "\n=End Examples\n"
             "\n=Context=\n{context}\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "Give a letter grade (A+ through F) to this answer. F means irrelevant, C means no terrible errors but missing a basic thing or two, B means nothing wrong, A means fantastic, A+ means no possible improvements."
-            "Only respond with a letter grade A, B, C, D, or F, nothing else."
-            "\n=Grade=\n"), 
+            "\n=Grade=\n "), 
         "abtest" : PromptTemplate.from_template(
             "You are choosing between two answers based on how well they answer a question."
-            "\n=Context=\n{context}\n=Question=\n{input_text}\n=Attempted Answer 0=\n{output_text_0}\n=Attempted Answer 1=\n{output_text_1}\n="
-            "Choose the better answer, Answer 0 or Answer 0. Only respond with '0' or '1', nothing else. "
-            "\n=Choice=\n"), 
+            "Choose the better answer. Only respond with '0' or '1', nothing else."
+            "\nExamples\n"
+            "\n=Context=\nsample context\n=Question=\n{input_text}\n=Answer 0=\nbad answer\n=Answer 1=\ngood answer\n=\n=Choice=\n 1"
+            "\n=Context=\nsample context\n=Question=\n{input_text}\n=Answer 0=\ngood answer\n=Answer 1=\nbad answer\n=\n=Choice=\n 0"
+            "\n=End Examples\n"
+            "\n=Context=\n{context}\n=Question=\n{input_text}\n=Answer 0=\n{output_text_0}\n=Answer 1=\n{output_text_1}\n="
+            "\n=Choice=\n "), 
     }
 }
 
-# define evaluator chains
+# define evaluators
 # this evaluator chains dictionary is structured 
 # task (e.g. summary) -> feedback type (e.g. lettergrade) -> model name -> chain (either LLMChain or LLaMa2Chain)
-evaluator_chains = {} 
+evaluators = {} 
 for task in tasks:
-    evaluator_chains[task] = {}
+    evaluators[task] = {}
     for prompt in tasks[task]:
-        evaluator_chains[task][prompt] = {}
+        evaluators[task][prompt] = {}
         for m in ["gpt35", "gpt4", "claude", "command"]:
-            evaluator_chains[task][prompt][m] = LLMChain(llm=models[m], prompt=tasks[task][prompt])
-        evaluator_chains[task][prompt]["llama2"] = LLaMa2Chain(llama2, tasks[task][prompt])
+            evaluators[task][prompt][m] = LLMChain(llm=models[m], prompt=tasks[task][prompt])
+        evaluators[task][prompt]["llama2"] = LLaMa2Chain(llama2, tasks[task][prompt])
 
 # load existing response data
 summary_df = pd.read_csv("data/summarization/aug2023_news_summarization.csv")
@@ -129,7 +139,7 @@ inputs = {"summary" : articles, "qa" : questions}
 # define generic evaluation function for all feedback types
 def evaluate(
     task="summary", # summary, qa
-    feedback="binary", # written, binary, integer, lettergrade, abtest
+    feedback="integer", # written, integer, lettergrade, abtest
     evaluator="gpt35", # gpt35, gpt4, claude, command, llama2
     candidate_response=None, # {gpt35, gpt4, claude, command, llama2} x {response, rephrase_gt} x {0, 1, 2}
     candidate_response_A=None, # {gpt35, gpt4, claude, command, llama2} x {response, rephrase_gt}
@@ -141,7 +151,7 @@ def evaluate(
     if candidate_response_A is not None or candidate_response_B is not None:
         assert candidate_response is None and candidate_response_A is not None and candidate_response_B is not None and feedback=="abtest"
 
-    # prepare inputs for the evaluator chain
+    # prepare inputs for the evaluator
     evaluator_input_dict = {
         "input_text" : inputs[task][data_num]
     }
@@ -153,8 +163,8 @@ def evaluate(
     else:
         evaluator_input_dict["output_text"] = dfs[task][f"{candidate_response}"].values[data_num]
     
-    # run evaluator chain
-    evaluation = evaluator_chains[task][feedback][evaluator](evaluator_input_dict)["text"]
+    # run evaluator
+    evaluation = evaluators[task][feedback][evaluator](evaluator_input_dict)["text"]
     return evaluation
 
 def make_llm_evaluation_dataset_from_scratch():
@@ -172,12 +182,12 @@ def make_llm_evaluation_dataset_from_scratch():
     }
     evaluation_directories = {"summary" : "summarization/summary_evaluations", "qa" : "rag_qa/answer_evaluations"}
 
-    for evaluator in models:
+    for evaluator in ["llama2", "cohere", "claude", "gpt35"]: # more like gpt-$$$$ 
         for task in tasks:
             for data_num in range(n_data):
 
                 # direct feedback
-                for feedback in ["written", "binary", "integer", "lettergrade"]:
+                for feedback in ["written", "integer", "lettergrade"]:
                     for candidate in candidate_output_columns[task]:
                         filename = f"data/{evaluation_directories[task]}/{evaluator}-{feedback}-{candidate}-{data_num}.txt"
                         if not os.path.exists(filename):
