@@ -9,10 +9,10 @@ import replicate
 from time import time
 
 # define models
-gpt35 = ChatOpenAI(temperature=0.7, max_tokens=10)
+gpt35 = ChatOpenAI(temperature=0.7, max_tokens=32)
 gpt4 = ChatOpenAI(model='gpt-4', temperature=0.7, max_tokens=256)
-claude = ChatAnthropic(temperature=0.7, max_tokens_to_sample=10)
-command = Cohere(temperature=0.7, max_tokens=10)
+claude = ChatAnthropic(temperature=0.7, max_tokens_to_sample=32)
+command = Cohere(temperature=0.7, max_tokens=32)
 class LlaMa2:
     """Callable LLaMa2 using replicate"""
     def __init__(self, model_name: str):
@@ -20,7 +20,7 @@ class LlaMa2:
     def __call__(self, input_text: str):
         replicate_output_generator = replicate.run(
             f"replicate/{self.model_name}",
-            input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 10}
+            input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 32}
         )
         replicate_output = "".join([x for x in replicate_output_generator])
         return replicate_output
@@ -42,7 +42,7 @@ models = {
     "llama2" : llama2,
 }
 
-# define evaluation prompts
+# define task evaluation prompt templates
 tasks = {
     "summary" : {
         "written" : PromptTemplate.from_template(
@@ -89,16 +89,18 @@ tasks = {
             "\n=Choice=\n "), 
     }
 }
+
+# define baseline instructions for task evaluation
 baseline_instructions = {
     "summary" : {
         "written" : "Give one sentence of feedback on the summary with respect to its relevance, importance, and accuracy. Be extremely strict and critical when it comes to relevance, importance, and accuracy.",
-        "integer" : "Give a score 1-10 to this summary. 1 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. Only respond with the score, nothing else.",
+        "integer" : "Give a score 0-10 to this summary. 0 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. Only respond with the score, nothing else.",
         "lettergrade" : "Give a letter grade (A+ through F) to this summary. F means irrelevant, C means errors, A+ means no possible improvements. Be extremely harsh, strict, and critical with respect to its relevance, importance, and accuracy. Only respond with a letter grade, nothing else.",
         "abtest" : "Choose the better summary on the basis of relevance, importance, and accuracy. Only respond with '0' or '1', nothing else."
     },
     "qa" : {
         "written" : "Give one sentence of feedback on the answer with respect to its correctness. Be extremely strict and critical when it comes to correctness.",
-        "integer" : "Give a score 1-10 to this answer. 1 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. Only respond with the score, nothing else.",
+        "integer" : "Give a score 0-10 to this answer. 0 means irrelevant, 5 means errors, 10 means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. Only respond with the score, nothing else.",
         "lettergrade" : "Give a letter grade (A+ through F) to this answer. F means irrelevant, C means errors, A+ means no possible improvements. Be extremely harsh, strict, and critical with respect to correctness. Only respond with a letter grade, nothing else.",
         "abtest" : "Choose the better answer on the basis of correctness. Only respond with '0' or '1', nothing else."
     }
@@ -137,18 +139,50 @@ sample_ok_summary = "There is going to be a third season of And Just Like That t
 sample_awful_summary = "The hit show HBO Max is coming to Sarah Jessica Parker this fall, with season two returning to be thrilled at developing executive producers. There are people named John, Julia, Elisa, Sarah, Michael, Cynthia discussed. Through the power of television, their vision has come together to produce the series."
 sample_irrelevant = "Most of the time, the sun rises in the morning and sets at night."
 
-sample_question = "When are new And Just Like That episodes gonna come out?"
-sample_perfect_answer = "The article doesn't mention a date for season 3, only that the show has been renewed for a third season. It does mention, though, that the season 2 finale airs August 24."
-sample_ok_answer = "Doesn't say."
+sample_question = "When is season 3 of And Just Like That gonna come out?"
+sample_perfect_answer = "The question is not answerable because the article doesn't mention a date for season 3."
+sample_ok_answer = "I don't know."
 sample_awful_answer = "Aug. 24"
 
+sample_inputs = {
+    "summary" : sample_article,
+    "qa" : sample_question
+}
 
+sample_outputs = {
+    "summary" : {
+        "perfect" : sample_perfect_summary, 
+        "ok" : sample_ok_summary, 
+        "awful" : sample_awful_summary, 
+        "irrelevant" : sample_irrelevant
+    },
+    "qa" : {
+        "perfect" : sample_perfect_answer, 
+        "ok" : sample_ok_answer, 
+        "awful" : sample_awful_answer, 
+        "irrelevant" : sample_irrelevant
+    }
+}
+
+expected_calibrated_results = {
+    "lettergrade" : {
+        "perfect" : "A+", 
+        "ok" : "B-", 
+        "awful" : "D", 
+        "irrelevant" : "F"
+    },
+    "integer" : {
+        "perfect" : "10", 
+        "ok" : "5", 
+        "awful" : "3", 
+        "irrelevant" : "0"
+    }
+}
 
 # define evaluation parsers
-
 def get_number_grade(s: str) -> float:
-    # This regex pattern will match numbers 1-10 with optional decimal values for numbers other than 10.
-    pattern = r'\b(10|[1-9](?:\.\d)?)\b'
+    # This regex pattern will match numbers 0-10 with optional decimal values for numbers other than 10.
+    pattern = r'\b(10|[0-9](?:\.\d)?)\b'
     match = re.search(pattern, s)
     return float(match.group()) if match else -1.0
 
@@ -160,6 +194,7 @@ def get_letter_grade(s: str) -> str:
 
 assert get_number_grade("My score is 7.5 out of 10.") == 7.5
 assert get_number_grade("My score is 3 out of 10.") == 3
+assert get_number_grade("I would give it a 0 fr fr") == 0
 assert get_letter_grade("F") == "F"
 assert get_letter_grade("I got a grade of B+ for the assignment.") == "B+"
 assert get_letter_grade("A-\n my reasoning is") == "A-"
@@ -169,7 +204,8 @@ grade_parser = {"integer" : get_number_grade, "lettergrade" : get_letter_grade}
 prompt_calibration_prompt = PromptTemplate.from_template(
     "You are re-writing an instruction for an LLM to get its evaluation to be calibrated to expected results. "
     "You are given the LLM's current instruction and the results of its calibration tests (as well as what the expected outputs should be). "
-    "You will return the re-written instruction in order to get the LLM to output the expected results on these same inputs."
+    "Describe why the previous evaluation was wrong so that the new evaluation results are closer to the expected evaluation. "
+    "Very weak LLMs need to be able to understand your instructions so be extremely precise."
     "\n=Current instruction=\n{current_instruction}"
     "\n=Input text=\n{input_text}"
     "\n=Perfect response (expected evaluation: {expected_perfect}, current LLM evaluation: {evaluation_perfect})=\n{candidate_perfect}"
@@ -186,41 +222,25 @@ command_summary_lettergrade_instruction = "Please provide an assessment of the g
 llama2_summary_lettergrade_instruction = baseline_instructions["summary"]["lettergrade"]
 
 gpt35_summary_integer_instruction = baseline_instructions["summary"]["integer"]
-claude_summary_integer_instruction = ""
-command_summary_integer_instruction = ""
-llama2_summary_integer_instruction = ""
+claude_summary_integer_instruction = "Rate the summary on a scale of 0-10. A score of 0 indicates the summary is completely irrelevant to the original text, a score of 5 suggests multiple inaccuracies or misunderstandings, and a score of 10 represents a perfect summary with no room for improvement. Be rigorous and exacting in your evaluation, paying particular attention to the relevance, the factual accuracy, and the ability to effectively convey the main points of the original text. Please note that your response should only include the numerical score."
+command_summary_integer_instruction = baseline_instructions["summary"]["integer"]
+llama2_summary_integer_instruction = baseline_instructions["summary"]["integer"]
 
-gpt35_qa_lettergrade_instruction = ""
-claude_qa_lettergrade_instruction = ""
-command_qa_lettergrade_instruction = ""
-llama2_qa_lettergrade_instruction = ""
+gpt35_qa_lettergrade_instruction = "Evaluate the answer by grading it from A+ through F. Give an A+ to answers that are perfectly correct or provide an explanation as to why the question cannot be answered with the given information. However, if the answer simply states 'I don't know' without providing any additional explanation or context, grade it as a B-. If the answer provides incorrect or misleading information, grade it as a D. Answers that do not pertain to the question at all, providing completely irrelevant information, should receive an F."
+claude_qa_lettergrade_instruction = "Please give a letter grade (A+ through F) based on the correctness and helpfulness of the response. An 'A+' grade should be given to responses that accurately answer the question with the most relevant information, even if it is not the expected answer. A 'B-' grade is for responses that don't provide specific information but still address the question. A 'D' grade is for responses providing incorrect information while an 'F' is for completely irrelevant responses. Only mention the letter grade, like 'A', and nothing else."
+command_qa_lettergrade_instruction = "Please assess the following responses based on their relevance, precision, and completeness in relation to the posed question. Award an A+ to answers that appropriately address the query, supplying pertinent data even if the exact information is not accessible. A response that might lack in detail but acknowledges the inability to provide the desired data should receive a B-. Grade with a D in cases where the response provides false or misleading information. An F should be assigned to responses that do not correspond to the query at all and offer unrelated information. Please note that even if the response does not provide the exact answer, as long as it correctly addresses the question and provides relevant information, it should be graded as A+. For example, if the question asks for a specific date and the response indicates that the date is not mentioned, it should still be graded as A+ as it provides relevant information. B- should be given to responses that acknowledge the inability to provide the requested information without any further details. Misleading or incorrect information, particularly false dates or facts that seem relevant but are actually incorrect, should be graded as D. Efforts to present irrelevant or completely unrelated information should receive an F grade."
+llama2_qa_lettergrade_instruction = """Assign a letter grade (ranging from A+ to F) to the provided response. ALWAYS start your feedback by specifying the grade, followed by a thorough explanation of why you have given this grade. For instance, 'Grade: B. The reason behind this grade is that the response is partially correct.'\n\nTake into consideration the following criteria while grading: \n\n1. If the response accurately answers the question and provides relevant information, such as 'The article doesn't mention a date for season 3', it should be graded as an 'A+'. \n\n2. If the response does not provide the exact answer but still remains relevant to the question, for example, 'I don't know', it should be graded as a 'B-'.\n\n3. If the response includes incorrect information, such as providing a random date when the release date is not known, like 'Aug. 24', it should be graded as a 'D'. \n\n4. If the response is completely unrelated to the question, like 'Most of the time, the sun rises in the morning and sets at night', it should be graded as an 'F'. \n\nRemember to judge the response based on its relevance and correctness, not on the structure or style of the answer."""
 
-gpt35_qa_integer_instruction = ""
-claude_qa_integer_instruction = ""
-command_qa_integer_instruction = ""
-llama2_qa_integer_instruction = ""
-
-sample_inputs = {
-    "summary" : sample_article,
-    "qa" : sample_question
-}
-
-expected_calibrated_results = {
-    "lettergrade" : {"perfect" : "A+", "ok" : "B-", "awful" : "D", "irrelevant" : "F"},
-    "integer" : {"perfect" : "10", "ok" : "6", "awful" : "3", "irrelevant" : "1"}
-}
-
-sample_outputs = {
-    "summary" : {"perfect" : sample_perfect_summary, "ok" : sample_ok_summary, "awful" : sample_awful_summary, "irrelevant" : sample_irrelevant},
-    "qa" : {"perfect" : sample_perfect_answer, "ok" : sample_ok_answer, "awful" : sample_awful_answer, "irrelevant" : sample_irrelevant}
-}
-
+gpt35_qa_integer_instruction = """Please rate the answer on a scale from 1 to 10 based on the following guidelines: \n\n- If the answer is correct and specifically addresses the question with information found within the given context, assign it a score of 10.\n\n- If the question cannot be answered due to lack of relevant information in the provided context, and the LLM correctly identifies this by stating that the context does not provide the answer, also give it a score of 10.\n\n- If the LLM response is evasive or vague such as "I don't know" without referring to the lack of information in the context, give it a score of 5.\n\n- If the information is present in the context but is inaccurately represented in the response, give this a score of 3.\n\n- Any responses that are completely unrelated to the question or the context should be assigned a score of 0."""
+claude_qa_integer_instruction = "Provide a score ranging from 0 to 10 based on the accuracy and usefulness of the response. Accuracy refers to whether the information provided is true or false, while usefulness refers to how beneficial the information is to the user. ALWAYS initiate your response by stating your score and then explaining the reason behind your score. For example, 'Score: 5. The reason behind this score is that the response is only partially correct or helpful.' Remember, a perfect response that is both accurate and helpful should be scored a 10, an OK or partially correct/helpful response should be scored a 5, a wrong but somewhat related response should be scored a 3, and a completely irrelevant response should be scored as 0."
+command_qa_integer_instruction = "Score the correctness of the answer on a scale of 0 to 10 where:\n\n 10 - the answer directly addresses the question asked and provides a factually accurate and relevant response. If the question asks for specifics that are not known, the answer acknowledges this and does not speculate.\n\n5 - the answer attempts to address the question but may not contain some degree of speculation, ambiguity, or factual errors. However, the core content is still somewhat relevant.\n\n3 - the answer is tangential.\n\n0 - the answer is irrelevant."
+llama2_qa_integer_instruction = "You need to evaluate the provided response on a scale of 0 to 10. Begin your evaluation by presenting the score, then provide a detailed explanation for your scoring. Your explanation should focus on how precise, helpful, and relevant the response is to the question asked. For example, 'Score: 5. This score is given because the response, while not incorrect, does not provide a precise or helpful answer to the question.' Here are some guiding principles for your evaluation:\n\n1. When the response precisely answers the question with the information available, even if it is to confirm the unavailability of the answer, it should be scored as 10. \n2. An ambiguous response or a response that does not provide a direct answer to the question, but isn't incorrect should be scored as 5. \n3. A response that provides incorrect information should be scored as 3. This includes responses that provide specific information that is false or misleading. \n4. If the response is completely unrelated to the question, it should receive the lowest score of 0.\n\nRemember, these are only guidelines, there can be variations based on the specific context of the responses. It's important to consider the relevance and accuracy of the response in the context of the specific question being asked"
 
 def calibrate_evaluator(
     evaluator_name, 
     task,
     feedback,
-    calibrator_name="gpt4", 
+    calibrator_model=gpt4, 
     baseline_instruction=None
 ):
 
@@ -228,12 +248,12 @@ def calibrate_evaluator(
     if baseline_instruction is None:
         instruction = baseline_instructions[task][feedback]
 
-    calibrator = LLMChain(llm=models[calibrator_name], prompt=prompt_calibration_prompt)
+    calibrator = LLMChain(llm=calibrator_model, prompt=prompt_calibration_prompt)
 
     while True:
         print("current instruction:", instruction)
 
-        print("________________________________________")
+        print("---------------------------------------------")
         calibrator_input = {"current_instruction" : instruction, "input_text" : sample_inputs[task]}
         for candidate in ["perfect", "ok", "awful", "irrelevant"]:
             evaluator_input = {
@@ -245,25 +265,22 @@ def calibrate_evaluator(
                 evaluator_input["context"] = sample_article
             evaluation = evaluators[task][feedback][evaluator_name](evaluator_input)["text"]
             parsed_evaluation = grade_parser[feedback](evaluation)
-            print("unparsed", evaluation)
-            print("parsed", parsed_evaluation)
+            print("-\nunparsed\n-\n", evaluation)
+            print("-\nparsed\n-\n", parsed_evaluation)
 
             calibrator_input[f"candidate_{candidate}"] = sample_outputs[task][candidate]
             calibrator_input[f"expected_{candidate}"] = expected_calibrated_results[feedback][candidate]
             calibrator_input[f"evaluation_{candidate}"] = parsed_evaluation
 
-        calibrated_instruction = calibrator(calibrator_input)["text"]   
-        print(calibrated_instruction)
-        user_edited_calibrated_instruction = input("----\nIf the new instruction needs to be parsed, type it now. Otherwise just hit enter:\n>>>")
-        if user_edited_calibrated_instruction == "":
-            instruction = calibrated_instruction
+        quit = input("-----\nPress q if this is calibrated enough. Otherwise just hit enter:\n>>>")
+
+        if quit == "":
+            calibrated_instruction = calibrator(calibrator_input)["text"]   
+            print(f"----\n{calibrated_instruction}")
+            user_edited_calibrated_instruction = input("-----\nIf the new instruction needs to be parsed, type it now. Otherwise just hit enter:\n>>>")
+            if user_edited_calibrated_instruction == "":
+                instruction = calibrated_instruction
+            else:
+                instruction = user_edited_calibrated_instruction
         else:
-            instruction = user_edited_calibrated_instruction
-
-
-calibrate_evaluator(
-    "gpt35", 
-    "qa",
-    "integer",
-    sample_context=sample_article
-)
+            break
