@@ -33,6 +33,7 @@ class LLaMa2Chain:
         filled_template = self.prompt.format(**input_dict)
         output = self.model(filled_template)
         return {"text" : output}
+targets = ["gpt35", "gpt4", "claude", "command", "llama2"]
 models = {
     "gpt35" : gpt35,
     "gpt4" : gpt4,
@@ -41,77 +42,8 @@ models = {
     "llama2" : llama2,
 }
 
-# define evaluation prompts
-tasks = {
-    "summary" : {
-        "written" : PromptTemplate.from_template(
-            "You are giving feedback on the quality of a summary."
-            "Give one sentence of feedback on the summary with respect to its quality. Be extremely harsh, strict, and critical."
-            "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "\n=Feedback=\n "), 
-        "integer" : PromptTemplate.from_template(
-            "You are giving a score based on the quality of a summary."
-            "Give a score 1-10 to this summary. 1 means irrelevant, 5 means errors, 10 means no possible improvements."
-            "Be extremely harsh, strict, and critical. Only respond with the score, nothing else."
-            "\n=Examples=\n"
-            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an amazing summary\n=\n=Score=\n 9"
-            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an awful summary\n=\n=Score=\n 2"
-            "\n=End Examples=\n"
-            "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "\n=Score=\n "), 
-        "lettergrade" : PromptTemplate.from_template(
-            "You are giving a grade based on the quality of a summary."
-            "Give a letter grade (A+ through F) to this summary. F means irrelevant, C means errors, A+ means no possible improvements."
-            "Be extremely harsh, strict, and critical. Only respond with a letter grade, nothing else."
-            "\n=Examples=\n"
-            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an amazing summary\n=\n=Grade=\n A"
-            "\n=Article=\npretend this is a sample article\n=Summary=\npretend this is an awful summary\n=\n=Grade=\n D"
-            "\n=End Examples=\n"
-            "\n=Article=\n{input_text}\n=Summary=\n{output_text}\n=\n"
-            "\n=Grade=\n "), 
-        "abtest" : PromptTemplate.from_template(
-            "You are choosing between two summaries based on how well they summarize an article."
-            "Choose the better summary. Only respond with '0' or '1', nothing else."
-            "\nExamples\n"
-            "\n=Article=\npretend this is a sample article\n=Summary 0=\npretend this is a bad summary\n=Summary 1=\npretend this is a good summary\n=\n=Choice=\n 1"
-            "\n=Article=\npretend this is a sample article\n=Summary 0=\npretend this is a good summary\n=Summary 1=\npretend this is a bad summary\n=\n=Choice=\n 0"
-            "\n=End Examples\n"
-            "\n=Article=\n{input_text}\n=Summary 0=\n{output_text_0}\n=Summary 1=\n{output_text_1}\n=\n"
-            "\n=Choice=\n "), 
-    },
-    "qa" : {
-        "written" : PromptTemplate.from_template(
-            "You are giving feedback on the correctness of an answer to a question."
-            "\n=Context=\n{context}\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "Give one sentence of feedback on the answer with respect to its correctness. Be extremely harsh, strict, critical."
-            "\n=Feedback=\n "), 
-        "integer" : PromptTemplate.from_template(
-            "You are giving a score based on the correctness of an answer to a question."
-            "=Context=\n{context}\n\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "Give a score 1-10 to this answer. 1 means irrelevant, 5 means errors, 10 means no possible improvements."
-            "Be extremely harsh, strict, and critical. Only respond with the score, nothing else."
-            "\n=Score=\n "), 
-        "lettergrade" : PromptTemplate.from_template(
-            "You are giving a grade based on the correctness of an answer to a question."
-            "Give a letter grade (A+ through F) to this answer. F means irrelevant, C means errors, A+ means no possible improvements."
-            "Be extremely harsh, strict, and critical. Only respond with a letter grade, nothing else."
-            "\nExamples\n"
-            "\n=Context=\npretend this is a sample context\n=Question=\npretend this is a sample question\n=Attempted Answer=\npretend this is an amazing answer\n=\n=Grade=\n A"
-            "\n=Context=\npretend this is a sample context\n=Question=\npretend this is a sample question\n=Attempted Answer=\npretend this is an atrocious answer\n=\n=Grade=\n D"
-            "\n=End Examples\n"
-            "\n=Context=\n{context}\n=Question=\n{input_text}\n=Attempted Answer=\n{output_text}\n=\n"
-            "\n=Grade=\n "), 
-        "abtest" : PromptTemplate.from_template(
-            "You are choosing between two answers based on how well they answer a question."
-            "Choose the better answer. Only respond with '0' or '1', nothing else."
-            "\nExamples\n"
-            "\n=Context=\nsample context\n=Question=\n{input_text}\n=Answer 0=\nbad answer\n=Answer 1=\ngood answer\n=\n=Choice=\n 1"
-            "\n=Context=\nsample context\n=Question=\n{input_text}\n=Answer 0=\ngood answer\n=Answer 1=\nbad answer\n=\n=Choice=\n 0"
-            "\n=End Examples\n"
-            "\n=Context=\n{context}\n=Question=\n{input_text}\n=Answer 0=\n{output_text_0}\n=Answer 1=\n{output_text_1}\n="
-            "\n=Choice=\n "), 
-    }
-}
+# import evaluation prompts
+from calibrate_evaluator_prompts import tasks, optimized_task_evaluator_instructions
 
 # define evaluators
 # this evaluator chains dictionary is structured 
@@ -153,7 +85,8 @@ def evaluate(
 
     # prepare inputs for the evaluator
     evaluator_input_dict = {
-        "input_text" : inputs[task][data_num]
+        "input_text" : inputs[task][data_num], 
+        "instruction" : optimized_task_evaluator_instructions[evaluator][task][feedback]
     }
     if task == "qa":
         evaluator_input_dict["context"] = mocked_retrievals[data_num]
@@ -167,6 +100,7 @@ def evaluate(
     evaluation = evaluators[task][feedback][evaluator](evaluator_input_dict)["text"]
     return evaluation
 
+
 def make_llm_evaluation_dataset_from_scratch():
     if not os.path.isdir("data/summarization/summary_evaluations"):
         os.mkdir("data/summarization/summary_evaluations")
@@ -177,17 +111,17 @@ def make_llm_evaluation_dataset_from_scratch():
     n_attempts = 3
 
     candidate_output_columns = {
-        "summary" : ["ground_truth_summary"]+[f"{m}_{g}_{i}" for i in range(n_attempts) for g in ["summary", "rephrase_gt"] for m in models],
-        "qa" : ["ground_truth_answer"]+[f"{m}_{g}_{i}" for i in range(n_attempts) for g in ["answer", "rephrase_gt"] for m in models],
+        "summary" : ["ground_truth_summary"]+[f"{m}_{g}_{i}" for i in range(n_attempts) for g in ["summary", "rephrase_gt"] for m in targets],
+        "qa" : ["ground_truth_answer"]+[f"{m}_{g}_{i}" for i in range(n_attempts) for g in ["answer", "rephrase_gt"] for m in targets],
     }
     evaluation_directories = {"summary" : "summarization/summary_evaluations", "qa" : "rag_qa/answer_evaluations"}
 
-    for evaluator in ["llama2", "cohere", "claude", "gpt35"]: # more like gpt-$$$$ 
+    for evaluator in ["command"]:
         for task in tasks:
             for data_num in range(n_data):
 
                 # direct feedback
-                for feedback in ["written", "integer", "lettergrade"]:
+                for feedback in ["integer", "lettergrade"]:#["written", "integer", "lettergrade"]:
                     for candidate in candidate_output_columns[task]:
                         filename = f"data/{evaluation_directories[task]}/{evaluator}-{feedback}-{candidate}-{data_num}.txt"
                         if not os.path.exists(filename):
@@ -206,24 +140,24 @@ def make_llm_evaluation_dataset_from_scratch():
 
 
                 # A/B testing feedback 
-                for candidate_A in candidate_output_columns[task]:
-                    other_models = [m for m in candidate_output_columns[task] if m != candidate_A]
-                    for candidate_B in other_models:
-                        filename = f"data/{evaluation_directories[task]}/{evaluator}-abtest-{candidate_A}-{candidate_B}-{data_num}.txt"
-                        # only consider candidates from attempt # 0 to narrow the space for now
-                        if not os.path.exists(filename) and "_1" not in candidate_A and "_1" not in candidate_B and "_2" not in candidate_A and "_2" not in candidate_B:
-                            print(f"{evaluator} {task} data#{data_num} abtest {candidate_A} {candidate_B}")
-                            t0 = time()
-                            ab_evaluation = evaluate(
-                                task=task, 
-                                feedback="abtest", 
-                                evaluator=evaluator, 
-                                candidate_response_A=candidate_A,
-                                candidate_response_B=candidate_B,
-                                data_num=data_num
-                            )
-                            with open(filename, "w") as f:
-                                f.write(ab_evaluation)
-                            print("time", time() - t0)
+                # for candidate_A in candidate_output_columns[task]:
+                #     other_models = [m for m in candidate_output_columns[task] if m != candidate_A]
+                #     for candidate_B in other_models:
+                #         filename = f"data/{evaluation_directories[task]}/{evaluator}-abtest-{candidate_A}-{candidate_B}-{data_num}.txt"
+                #         # only consider candidates from attempt # 0 to narrow the space for now
+                #         if not os.path.exists(filename) and "_1" not in candidate_A and "_1" not in candidate_B and "_2" not in candidate_A and "_2" not in candidate_B:
+                #             print(f"{evaluator} {task} data#{data_num} abtest {candidate_A} {candidate_B}")
+                #             t0 = time()
+                #             ab_evaluation = evaluate(
+                #                 task=task, 
+                #                 feedback="abtest", 
+                #                 evaluator=evaluator, 
+                #                 candidate_response_A=candidate_A,
+                #                 candidate_response_B=candidate_B,
+                #                 data_num=data_num
+                #             )
+                #             with open(filename, "w") as f:
+                #                 f.write(ab_evaluation)
+                #             print("time", time() - t0)
 
 make_llm_evaluation_dataset_from_scratch()

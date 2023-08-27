@@ -8,39 +8,39 @@ import re
 import replicate
 from time import time
 
-# define models
-gpt35 = ChatOpenAI(temperature=0.7, max_tokens=32)
-gpt4 = ChatOpenAI(model='gpt-4', temperature=0.7, max_tokens=256)
-claude = ChatAnthropic(temperature=0.7, max_tokens_to_sample=32)
-command = Cohere(temperature=0.7, max_tokens=32)
-class LlaMa2:
-    """Callable LLaMa2 using replicate"""
-    def __init__(self, model_name: str):
-        self.model_name = model_name
-    def __call__(self, input_text: str):
-        replicate_output_generator = replicate.run(
-            f"replicate/{self.model_name}",
-            input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 32}
-        )
-        replicate_output = "".join([x for x in replicate_output_generator])
-        return replicate_output
-llama2 = LlaMa2("llama-2-70b-chat:2c1608e18606fad2812020dc541930f2d0495ce32eee50074220b87300bc16e1")
-class LLaMa2Chain:
-    """Callable class to mimic the langchain LLMChain callable syntax"""
-    def __init__(self, model: LlaMa2, prompt : PromptTemplate):
-        self.model = model
-        self.prompt = prompt
-    def __call__(self, input_dict):
-        filled_template = self.prompt.format(**input_dict)
-        output = self.model(filled_template)
-        return {"text" : output}
-models = {
-    "gpt35" : gpt35,
-    "gpt4" : gpt4,
-    "claude" : claude,
-    "command" : command,
-    "llama2" : llama2,
-}
+# # define models
+# gpt35 = ChatOpenAI(temperature=0.7, max_tokens=32)
+# gpt4 = ChatOpenAI(model='gpt-4', temperature=0.7, max_tokens=256)
+# claude = ChatAnthropic(temperature=0.7, max_tokens_to_sample=32)
+# command = Cohere(temperature=0.7, max_tokens=32)
+# class LlaMa2:
+#     """Callable LLaMa2 using replicate"""
+#     def __init__(self, model_name: str):
+#         self.model_name = model_name
+#     def __call__(self, input_text: str):
+#         replicate_output_generator = replicate.run(
+#             f"replicate/{self.model_name}",
+#             input={"prompt": input_text, "temperature" : 0.7, "max_new_tokens" : 32}
+#         )
+#         replicate_output = "".join([x for x in replicate_output_generator])
+#         return replicate_output
+# llama2 = LlaMa2("llama-2-70b-chat:2c1608e18606fad2812020dc541930f2d0495ce32eee50074220b87300bc16e1")
+# class LLaMa2Chain:
+#     """Callable class to mimic the langchain LLMChain callable syntax"""
+#     def __init__(self, model: LlaMa2, prompt : PromptTemplate):
+#         self.model = model
+#         self.prompt = prompt
+#     def __call__(self, input_dict):
+#         filled_template = self.prompt.format(**input_dict)
+#         output = self.model(filled_template)
+#         return {"text" : output}
+# models = {
+#     "gpt35" : gpt35,
+#     "gpt4" : gpt4,
+#     "claude" : claude,
+#     "command" : command,
+#     "llama2" : llama2,
+# }
 
 # define task evaluation prompt templates
 tasks = {
@@ -109,14 +109,14 @@ baseline_instructions = {
 # define evaluators
 # this evaluator chains dictionary is structured 
 # task (e.g. summary) -> feedback type (e.g. lettergrade) -> model name -> chain (either LLMChain or LLaMa2Chain)
-evaluators = {} 
-for task in tasks:
-    evaluators[task] = {}
-    for prompt in tasks[task]:
-        evaluators[task][prompt] = {}
-        for m in ["gpt35", "gpt4", "claude", "command"]:
-            evaluators[task][prompt][m] = LLMChain(llm=models[m], prompt=tasks[task][prompt])
-        evaluators[task][prompt]["llama2"] = LLaMa2Chain(llama2, tasks[task][prompt])
+# evaluators = {} 
+# for task in tasks:
+#     evaluators[task] = {}
+#     for prompt in tasks[task]:
+#         evaluators[task][prompt] = {}
+#         for m in ["gpt35", "gpt4", "claude", "command"]:
+#             evaluators[task][prompt][m] = LLMChain(llm=models[m], prompt=tasks[task][prompt])
+#         evaluators[task][prompt]["llama2"] = LLaMa2Chain(llama2, tasks[task][prompt])
 
 # define sample inputs & outputs
 sample_article = """
@@ -236,51 +236,96 @@ claude_qa_integer_instruction = "Provide a score ranging from 0 to 10 based on t
 command_qa_integer_instruction = "Score the correctness of the answer on a scale of 0 to 10 where:\n\n 10 - the answer directly addresses the question asked and provides a factually accurate and relevant response. If the question asks for specifics that are not known, the answer acknowledges this and does not speculate.\n\n5 - the answer attempts to address the question but may not contain some degree of speculation, ambiguity, or factual errors. However, the core content is still somewhat relevant.\n\n3 - the answer is tangential.\n\n0 - the answer is irrelevant."
 llama2_qa_integer_instruction = "You need to evaluate the provided response on a scale of 0 to 10. Begin your evaluation by presenting the score, then provide a detailed explanation for your scoring. Your explanation should focus on how precise, helpful, and relevant the response is to the question asked. For example, 'Score: 5. This score is given because the response, while not incorrect, does not provide a precise or helpful answer to the question.' Here are some guiding principles for your evaluation:\n\n1. When the response precisely answers the question with the information available, even if it is to confirm the unavailability of the answer, it should be scored as 10. \n2. An ambiguous response or a response that does not provide a direct answer to the question, but isn't incorrect should be scored as 5. \n3. A response that provides incorrect information should be scored as 3. This includes responses that provide specific information that is false or misleading. \n4. If the response is completely unrelated to the question, it should receive the lowest score of 0.\n\nRemember, these are only guidelines, there can be variations based on the specific context of the responses. It's important to consider the relevance and accuracy of the response in the context of the specific question being asked"
 
-def calibrate_evaluator(
-    evaluator_name, 
-    task,
-    feedback,
-    calibrator_model=gpt4, 
-    baseline_instruction=None
-):
+optimized_task_evaluator_instructions = {
+    "gpt35" : {
+        "summary" : {
+            "integer" : gpt35_summary_integer_instruction,
+            "lettergrade" : gpt35_summary_lettergrade_instruction
+        },
+        "qa" : {
+            "integer" : gpt35_qa_integer_instruction,
+            "lettergrade" : gpt35_qa_lettergrade_instruction
+        }
+    },
+    "claude" : {
+        "summary" : {
+            "integer" : claude_summary_integer_instruction,
+            "lettergrade" : claude_summary_lettergrade_instruction
+        },
+        "qa" : {
+            "integer" : claude_qa_integer_instruction,
+            "lettergrade" : claude_qa_lettergrade_instruction
+        }
+    },
+    "command" : {
+        "summary" : {
+            "integer" : command_summary_integer_instruction,
+            "lettergrade" : command_summary_lettergrade_instruction
+        },
+        "qa" : {
+            "integer" : command_qa_integer_instruction,
+            "lettergrade" : command_qa_lettergrade_instruction
+        }
+    },
+    "llama2" : {
+        "summary" : {
+            "integer" : llama2_summary_integer_instruction,
+            "lettergrade" : llama2_summary_lettergrade_instruction
+        },
+        "qa" : {
+            "integer" : llama2_qa_integer_instruction,
+            "lettergrade" : llama2_qa_lettergrade_instruction
+        }
+    },
+}
 
-    instruction = baseline_instruction
-    if baseline_instruction is None:
-        instruction = baseline_instructions[task][feedback]
 
-    calibrator = LLMChain(llm=calibrator_model, prompt=prompt_calibration_prompt)
+# def calibrate_evaluator(
+#     evaluator_name, 
+#     task,
+#     feedback,
+#     calibrator_model=gpt4, 
+#     baseline_instruction=None
+# ):
 
-    while True:
-        print("current instruction:", instruction)
+#     instruction = baseline_instruction
+#     if baseline_instruction is None:
+#         instruction = baseline_instructions[task][feedback]
 
-        print("---------------------------------------------")
-        calibrator_input = {"current_instruction" : instruction, "input_text" : sample_inputs[task]}
-        for candidate in ["perfect", "ok", "awful", "irrelevant"]:
-            evaluator_input = {
-                "instruction" : instruction,
-                "input_text" : sample_inputs[task],
-                "output_text" : sample_outputs[task][candidate]
-            }
-            if task == "qa":
-                evaluator_input["context"] = sample_article
-            evaluation = evaluators[task][feedback][evaluator_name](evaluator_input)["text"]
-            parsed_evaluation = grade_parser[feedback](evaluation)
-            print("-\nunparsed\n-\n", evaluation)
-            print("-\nparsed\n-\n", parsed_evaluation)
+#     calibrator = LLMChain(llm=calibrator_model, prompt=prompt_calibration_prompt)
 
-            calibrator_input[f"candidate_{candidate}"] = sample_outputs[task][candidate]
-            calibrator_input[f"expected_{candidate}"] = expected_calibrated_results[feedback][candidate]
-            calibrator_input[f"evaluation_{candidate}"] = parsed_evaluation
+#     while True:
+#         print("current instruction:", instruction)
 
-        quit = input("-----\nPress q if this is calibrated enough. Otherwise just hit enter:\n>>>")
+#         print("---------------------------------------------")
+#         calibrator_input = {"current_instruction" : instruction, "input_text" : sample_inputs[task]}
+#         for candidate in ["perfect", "ok", "awful", "irrelevant"]:
+#             evaluator_input = {
+#                 "instruction" : instruction,
+#                 "input_text" : sample_inputs[task],
+#                 "output_text" : sample_outputs[task][candidate]
+#             }
+#             if task == "qa":
+#                 evaluator_input["context"] = sample_article
+#             evaluation = evaluators[task][feedback][evaluator_name](evaluator_input)["text"]
+#             parsed_evaluation = grade_parser[feedback](evaluation)
+#             print("-\nunparsed\n-\n", evaluation)
+#             print("-\nparsed\n-\n", parsed_evaluation)
 
-        if quit == "":
-            calibrated_instruction = calibrator(calibrator_input)["text"]   
-            print(f"----\n{calibrated_instruction}")
-            user_edited_calibrated_instruction = input("-----\nIf the new instruction needs to be parsed, type it now. Otherwise just hit enter:\n>>>")
-            if user_edited_calibrated_instruction == "":
-                instruction = calibrated_instruction
-            else:
-                instruction = user_edited_calibrated_instruction
-        else:
-            break
+#             calibrator_input[f"candidate_{candidate}"] = sample_outputs[task][candidate]
+#             calibrator_input[f"expected_{candidate}"] = expected_calibrated_results[feedback][candidate]
+#             calibrator_input[f"evaluation_{candidate}"] = parsed_evaluation
+
+#         quit = input("-----\nPress q if this is calibrated enough. Otherwise just hit enter:\n>>>")
+
+#         if quit == "":
+#             calibrated_instruction = calibrator(calibrator_input)["text"]   
+#             print(f"----\n{calibrated_instruction}")
+#             user_edited_calibrated_instruction = input("-----\nIf the new instruction needs to be parsed, type it now. Otherwise just hit enter:\n>>>")
+#             if user_edited_calibrated_instruction == "":
+#                 instruction = calibrated_instruction
+#             else:
+#                 instruction = user_edited_calibrated_instruction
+#         else:
+#             break
+
