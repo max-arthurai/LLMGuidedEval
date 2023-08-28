@@ -1,0 +1,5 @@
+ B+
+
+The summary accurately captures the key points that Python can now be used in Excel and executed securely in the cloud. It mentions this allows more advanced analytics and that the Python code is run using the Anaconda distribution. 
+
+However,

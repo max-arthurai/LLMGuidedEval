@@ -1,0 +1,9 @@
+Strengths:
+- The answer provides a clear explanation of the expected temperature increase in the near term and for the 2081-2100 period based on different GHG emissions scenarios.
+- It acknowledges the uncertainty surrounding the exact magnitude of warming.
+- It highlights the importance of reducing non-CO2 emissions in limiting temperature increase.
+
+Weaknesses:
+- The answer could have provided more specific information on the projected temperature increase in the near term (2021-2040).
+- It does not mention the possibility of global warming reaching or exceeding 1.5°C even under the very low GHG emission scenario.
+- The answer does not mention the remaining carbon budgets for limiting global warming to 1.5°C and 2°C, which were provided in the context.

@@ -1,0 +1,9 @@
+Strengths:
+- The answer accurately mentions the range of temperature increase projected for 2081-2100 based on different GHG emissions scenarios.
+- The answer is concise and to the point.
+
+Weaknesses:
+- The answer does not mention the near-term projections for global warming, which are also important to consider.
+- The answer does not provide any context or explanation for the GHG emissions scenarios mentioned.
+- The answer does not mention the likelihood of reaching different temperature thresholds (e.g., 1.5°C, 2°C) based on the emissions scenarios.
+- The answer does not reference the source of the information provided.

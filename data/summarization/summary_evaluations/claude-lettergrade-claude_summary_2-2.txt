@@ -1,0 +1,3 @@
+ B+
+
+The summary accurately captures the key points about Python integration in Excel allowing more advanced analytics capabilities. It mentions the =PY function to add Python code directly into cells, use of Anaconda distribution, and isolated secure execution on the Microsoft Cloud

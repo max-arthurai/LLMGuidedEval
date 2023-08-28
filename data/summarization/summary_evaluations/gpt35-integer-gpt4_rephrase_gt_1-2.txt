@@ -1,0 +1,1 @@
+Score: 8. The summary accurately captures the main points of the article, including the integration of Python execution in Microsoft Excel and the ability for data analysts to securely input Python code in Excel using Microsoft's Cloud. However, it could be improved by

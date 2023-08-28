@@ -1,0 +1,1 @@
+Score: 7. The summary is mostly correct, but it does not mention that the Python integration in Excel will be available to Microsoft 365 Insiders using the Beta Channel in Excel for Windows. It only mentions that it will be available to "Microsoft 365

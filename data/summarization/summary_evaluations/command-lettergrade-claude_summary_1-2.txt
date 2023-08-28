@@ -1,0 +1,1 @@
+A- The summary is accurate and relevant, but it does not include some important details. The summary does not mention that the Python integration in Excel will be available to Microsoft 365 Insiders using the Beta Channel in Excel for Windows. It also does not

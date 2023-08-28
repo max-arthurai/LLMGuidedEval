@@ -1,0 +1,1 @@
+Score: 9. The summary accurately captures the main points of the article, including the announcement of Python integration in Microsoft Excel and the ability to execute Python code in the Microsoft Cloud. It also mentions the benefits for data analysts and the emphasis on data

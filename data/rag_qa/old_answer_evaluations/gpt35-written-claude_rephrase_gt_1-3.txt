@@ -1,0 +1,9 @@
+Strengths:
+1. The answer provides a clear statement that global temperature increases are expected to surpass 1.5°C within this century.
+2. The answer includes the relevant information about the relationship between carbon dioxide emissions and global surface temperature.
+3. The answer highlights the range of potential global warming based on different levels of carbon emissions.
+
+Weaknesses:
+1. The answer does not mention the near-term timeframe (2021-2040) in which global warming is more likely than not to reach 1.5°C, as stated in the context.
+2. The answer does not mention the specific emissions scenarios (SSPs) that were considered in the assessment.
+3. The answer does not mention the remaining carbon budgets for limiting global warming to 1.5°C or 2°C, as mentioned in the context.

@@ -1,0 +1,7 @@
+Strengths:
+- The answer provides a specific range of warming estimates for the period of 2081-2100 based on different GHG emissions scenarios.
+
+Weaknesses:
+- The answer does not mention the specific temperature increase that is expected in the near term (2021-2040), which is relevant to the question.
+- The answer does not provide any information about how much hotter the Earth is "possibly" going to get beyond the end of the 21st century.
+- The answer does not address the concept of carbon budgets and their relationship to limiting global warming.

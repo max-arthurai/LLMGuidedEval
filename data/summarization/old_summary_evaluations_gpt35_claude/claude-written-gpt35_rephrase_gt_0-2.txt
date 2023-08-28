@@ -1,0 +1,21 @@
+ Here is my feedback on the summary:
+
+Strengths:
+
+- The summary accurately captures the key points from the article - that Python can now be used directly in Excel with the new =PY function, without needing to install additional software. 
+
+- It explains the benefits well - enabling more complex data analysis, visualizations, predictive analytics etc directly within Excel.
+
+- It highlights that this runs securely on the Microsoft Cloud rather than locally.
+
+- The summary is concise and to the point.
+
+Weaknesses:
+
+- The summary could provide a bit more context by mentioning this is aimed at data analysts, engineers, marketers etc rather than all Excel users.
+
+- It could mention that the Anaconda distribution of Python is leveraged to provide common data science packages.
+
+- The summary does not note this is currently in public preview for Microsoft 365 Insiders only. Adding this detail would give useful context on the current status.
+
+Overall the key points are covered well and the summary is clear and concise. Providing a bit more context on the target audience, packages included, and current availability would further improve it. But overall this is a strong summary that highlights the key details from the article accurately and conci

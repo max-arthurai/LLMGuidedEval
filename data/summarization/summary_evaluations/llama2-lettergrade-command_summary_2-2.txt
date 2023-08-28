@@ -1,0 +1,3 @@
+ Grade: A+.
+
+This summary is excellent in all aspects. It correctly states the main announcement made by Microsoft regarding the integration of Python in Excel, and it provides relevant details such as the availability of the public preview,

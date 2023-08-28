@@ -1,0 +1,9 @@
+Strengths:
+- The answer provides a clear summary of the projected increase in global temperature by the end of the 21st century.
+- It accurately states the relationship between CO2 emissions and global temperature increase.
+- It mentions the range of warming projected by computer simulations and acknowledges that it depends on the level of carbon emissions.
+
+Weaknesses:
+- The answer does not mention the "near term" projections of global warming, specifically that it is likely to reach 1.5°C even under the very low GHG emission scenario and likely to exceed 1.5°C under higher emissions scenarios.
+- The answer does not mention the remaining carbon budgets for limiting global warming to 1.5°C and 2°C, which could provide additional context.
+- The answer does not address the policies and laws addressing mitigation and their potential impact on future temperature increase.

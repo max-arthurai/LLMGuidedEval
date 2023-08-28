@@ -1,0 +1,1 @@
+Score: 8. The summary accurately captures the main points of the article and provides a concise overview of the new feature in Microsoft Excel, which is the inclusion of Python execution. It mentions that users can add Python code directly into spreadsheets and highlights

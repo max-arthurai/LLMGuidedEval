@@ -11,7 +11,7 @@ def get_number_grade(s: str) -> float:
     # This regex pattern will match numbers 0-10 with optional decimal values for numbers other than 10.
     pattern = r'\b(10|[0-9](?:\.\d)?)\b'
     match = re.search(pattern, s)
-    return float(match.group()) if match else -1.0
+    return float(match.group()) if match else -1
 
 def get_letter_grade(s: str) -> str:
     # This regex pattern will match letter grades A+ to F, with optional + or -.
@@ -22,7 +22,7 @@ grade_parser = {"integer" : get_number_grade, "lettergrade" : get_letter_grade, 
 
 tasks = ["summary", "qa"]
 models = ["gpt35", "gpt4", "claude", "command", "llama2"]
-evaluators = ["gpt35", "claude"]
+evaluators = ["gpt35", "claude", "command", "llama2"]
 
 n_data = 5
 n_attempts = 3
@@ -103,7 +103,7 @@ def plot_evaluation(
             "A+" : 10, "A" : 9, "A-" : 8, "B+" : 7, "B" : 6, "B-" : 5, "C+" : 4, "C" : 3, "C-" : 2, "D+" : 1, "D" : 1, "D-" : 1, "F" : 0
         })
         im = ax.imshow(grid_colors, cmap='coolwarm_r')
-        im.set_clim([0, 10])
+        im.set_clim([1, 10]) # no Fs observed yet
 
     # Annotation loop
     for i in range(grid.shape[0]):
@@ -119,22 +119,25 @@ def plot_evaluation(
     ax.set_title(f"{evaluator} {task} {feedback} evaluation")
     plt.tight_layout()
     plt.savefig(f"plots/{evaluator}/{evaluator}_{task}_{feedback}.png")
+    plt.close()
 
     # summary bar plot of score count for each target
     if feedback == "integer":
-        fig, ax = plt.subplots(figsize=(10,8))
+        fig, ax = plt.subplots(figsize=(12,6))
         for model_num, m in enumerate(sorted(models)):
-            scores = get_target_values(grid, m)
+            scores = [x for x in get_target_values(grid, m) if x>=0]
             ax.bar([model_num], [sum(scores)/len(scores)], yerr=np.array(scores).std())
-        scores = get_target_values(grid, "ground_truth")
-        ax.bar([len(models)], [sum(scores)/len(scores)], yerr=np.array(scores).std())
-        ax.set_ylim([7,10])
+        scores = [x for x in get_target_values(grid, "ground_truth") if x>=0]
+        heights = [sum(scores)/len(scores)]
+        ax.bar([len(models)], heights, yerr=np.array(scores).std())
+        ax.set_ylim([0.8*min(heights),1.2*max(heights)])
         plt.xticks(np.arange(len(models)+1), sorted(models) + ["ground_truth"], rotation=90)
         ax.set_xlabel('Candidate output')
         ax.set_ylabel(f'{evaluator} {feedback} evaluation')
         ax.set_title(f'{evaluator} {task} {feedback} evaluation distribution')
         plt.tight_layout()
         plt.savefig(f"plots/{evaluator}/bar_{evaluator}_{task}_{feedback}.png")
+
     elif feedback == "lettergrade":
         fig, axes = plt.subplots(1, len(models)+1, figsize=(30,4), sharex=True, sharey=True)
         fig.suptitle(f"{evaluator} {task} letter grade evaluation")
@@ -145,7 +148,7 @@ def plot_evaluation(
             axes[model_num].set_xticks(np.arange(len(grades)))
             axes[model_num].set_xticklabels(list(grades.keys()))
             axes[model_num].set_yticks([0,5,10,15,20,25])
-            axes[model_num].set_title(f"{evaluator} grade distribution for {m}")
+            axes[model_num].set_title(f"grade distribution for {m}")
 
             # Annotating bars with percentage
             for bar, value in zip(bars, grades.values()):
@@ -185,3 +188,11 @@ plot_evaluation("claude", "summary", "integer")
 plot_evaluation("claude", "summary", "lettergrade")
 plot_evaluation("claude", "qa", "integer")
 plot_evaluation("claude", "qa", "lettergrade")
+plot_evaluation("command", "summary", "integer")
+plot_evaluation("command", "summary", "lettergrade")
+plot_evaluation("command", "qa", "integer")
+plot_evaluation("command", "qa", "lettergrade")
+plot_evaluation("llama2", "summary", "integer")
+plot_evaluation("llama2", "summary", "lettergrade")
+plot_evaluation("llama2", "qa", "integer")
+plot_evaluation("llama2", "qa", "lettergrade")

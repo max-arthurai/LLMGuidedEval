@@ -1,0 +1,5 @@
+A- The response adequately addresses the question and provides relevant information, even if it does not provide the exact answer.
+
+B- The response acknowledges the inability to provide the requested information without further details.
+
+D- The response provides false or

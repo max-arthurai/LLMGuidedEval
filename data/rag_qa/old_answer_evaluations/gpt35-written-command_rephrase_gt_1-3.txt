@@ -1,0 +1,9 @@
+Strengths:
+- The answer accurately states that global warming is likely to exceed 1.5°C during the 21st century.
+- The answer includes the information that for every 1000 GtCO2 emitted, the global surface temperature rises by 0.45°C.
+- The answer mentions the range of global warming estimates based on different levels of carbon emissions.
+
+Weaknesses:
+- The answer does not mention the specific time frame for when global warming is expected to exceed 1.5°C.
+- The answer does not mention the specific emissions scenarios or pathways that were considered in the models.
+- The answer does not mention the remaining carbon budgets for limiting global warming to 1.5°C or 2°C.

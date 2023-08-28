@@ -1,0 +1,1 @@
+Score: 9. The summary accurately captures the main points of the article, highlighting the announcement of Python integration in Microsoft Excel. It mentions the benefits of this integration, such as enabling complex statistical analysis, visualizations, and machine learning. The summary

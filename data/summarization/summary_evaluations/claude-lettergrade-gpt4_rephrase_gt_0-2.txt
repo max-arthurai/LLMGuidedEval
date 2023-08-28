@@ -1,0 +1,5 @@
+ B
+
+The summary accurately captures some of the key points from the article, such as Python being integrated into Excel, allowing data analysts to write Python code in worksheets, and the code executing securely on the Microsoft Cloud. 
+
+However, it

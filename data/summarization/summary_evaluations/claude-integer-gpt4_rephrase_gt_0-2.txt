@@ -1,0 +1,3 @@
+ 9
+
+The summary accurately captures the key details from the original article - namely, that Python functionality is now available in Excel, allowing data analysts to write Python code directly in Excel spreadsheets. This Python code executes securely on the Microsoft Cloud. The

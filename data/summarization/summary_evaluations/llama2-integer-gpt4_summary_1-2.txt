@@ -1,0 +1,3 @@
+ Score: 8
+
+The summary provides a clear and concise overview of the announcement made by Microsoft regarding the integration of Python in Excel. It accurately highlights the key points, including the ability for users to add Python

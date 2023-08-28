@@ -1,0 +1,9 @@
+Strengths:
+- The answer accurately mentions that global warming is expected to exceed 1.5°C by the end of the 21st century.
+- It correctly states that for every 1000 GtCO2 emitted, global surface temperature rises by 0.45°C.
+- The answer provides a range of potential temperature increases based on different emission scenarios.
+
+Weaknesses:
+- The answer does not mention the time frame for reaching the potential temperature increases.
+- It does not discuss the likelihood of reaching the different temperature increases.
+- The answer does not mention the remaining carbon budgets for limiting global warming to specific levels.

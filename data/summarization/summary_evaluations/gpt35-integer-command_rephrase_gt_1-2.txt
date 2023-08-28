@@ -1,0 +1,1 @@
+Score: 8. The summary provides accurate and relevant information about the article. It highlights the key points, such as the integration of Python in Microsoft Excel and the ability to execute Python code in the Microsoft Cloud for security. However, it could be

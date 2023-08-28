@@ -1,0 +1,9 @@
+Strengths:
+- The answer provides a clear explanation of the expected increase in Earth's temperature in the near term and by the end of the 21st century.
+- It acknowledges the uncertainty of the projections and the influence of assumptions and models.
+- It mentions the potential impact of efforts to reduce non-CO2 emissions on temperature change.
+
+Weaknesses:
+- The answer could benefit from including the specific information provided in the context, such as the range of global warming estimates for different emissions scenarios.
+- It does not mention the specific carbon budgets for limiting global warming to 1.5°C or 2°C, which were provided in the context.
+- The answer could be improved by mentioning the potential consequences or impacts of the projected temperature increases.

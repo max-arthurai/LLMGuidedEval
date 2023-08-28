@@ -1,0 +1,10 @@
+Strengths:
+- The answer provides specific temperature ranges for different emissions scenarios.
+- The answer includes the time frame (2081-2100) for the temperature estimates.
+
+Weaknesses:
+- The answer does not mention the possibility of global warming exceeding 1.5°C in the near term (2021-2040), as stated in the context.
+- The answer does not mention the cumulative CO2 emissions and their role in increasing global warming.
+- The answer does not mention the likelihood or probability of reaching certain temperature thresholds.
+- The answer does not provide any information on the remaining carbon budgets for limiting global warming to 1.5°C or 2°C.
+- The answer does not mention the gaps between projected emissions and climate goals, as stated in the context.

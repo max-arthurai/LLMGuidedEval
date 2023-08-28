@@ -1,0 +1,1 @@
+Score: 9. The summary accurately covers the main points of the article, including the announcement of Python in Excel, the use cases for data analysts, engineers, marketers, and students, the method of entering Python code using the =PY function,

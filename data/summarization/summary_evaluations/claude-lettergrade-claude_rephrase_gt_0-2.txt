@@ -1,0 +1,5 @@
+ B+
+
+The summary accurately captures the key points that Python code can now be run directly in Excel spreadsheets through a new integration, enabling more advanced data analysis capabilities. It mentions this is done securely through the Microsoft Cloud. 
+
+Overall,

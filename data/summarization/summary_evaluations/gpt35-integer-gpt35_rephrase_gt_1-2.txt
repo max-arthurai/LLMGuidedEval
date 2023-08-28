@@ -1,0 +1,1 @@
+Score: 9. The summary accurately captures the main points of the article and provides a concise overview of the new functionality in Microsoft Excel. However, it could be improved by including more details about the specific features and benefits of the Python integration.

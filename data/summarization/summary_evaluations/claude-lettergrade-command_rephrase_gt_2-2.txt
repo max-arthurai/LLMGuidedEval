@@ -1,0 +1,3 @@
+ B+
+
+The summary accurately captures the key points that Python support is being added to Excel, enabling Python code execution and access to Python libraries. It notes this will benefit data analysts by allowing Python workflows directly in Excel spreadsheets. The summary is

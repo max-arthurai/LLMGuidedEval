@@ -1,0 +1,5 @@
+ C
+
+The summary captures some key points from the article, such as Python being integrated into Excel and enabling data analysts to run Python code. However, it is missing or inaccurate on some details:
+
+- It does not mention this is a

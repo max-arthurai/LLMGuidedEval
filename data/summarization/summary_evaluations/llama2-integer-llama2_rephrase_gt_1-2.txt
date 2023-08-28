@@ -1,0 +1,3 @@
+ Score: 8
+
+The summary provides a clear and concise overview of the recent update to Microsoft Excel, which now allows users to integrate and execute Python code directly into their spreadsheets. The summary highlights the key features of

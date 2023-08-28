@@ -1,0 +1,3 @@
+ B+
+
+The summary accurately captures the key details from the article about Python integration in Excel. It summarizes the main points concisely, including who can benefit from the new functionality, how Python code can be entered, the Anaconda distribution

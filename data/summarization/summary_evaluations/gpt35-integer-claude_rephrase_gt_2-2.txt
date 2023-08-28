@@ -1,0 +1,1 @@
+Score: 9. The summary accurately captures the main points of the article. It mentions that Python functionality is now available in Microsoft Excel, allowing data analysts to use Python scripts in Excel spreadsheets. It also highlights the secure execution of Python code through

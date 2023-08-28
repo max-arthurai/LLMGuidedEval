@@ -1,0 +1,12 @@
+Strengths:
+- The answer accurately states that human activities, particularly greenhouse gas emissions, have caused global warming.
+- The answer mentions the specific increase in global surface temperature and greenhouse gas emissions during the period of 2011-2020.
+- The answer highlights the various factors contributing to greenhouse gas emissions, such as unsustainable energy use and land-use changes.
+- The answer acknowledges that these changes have had significant impacts on the atmosphere, oceans, cryosphere, and biosphere.
+- The answer correctly states that the impacts of human-induced climate change are already visible in weather and climate extremes.
+
+Weaknesses:
+- The answer does not provide specific evidence or sources to support the claims made.
+- The answer does not mention the historical cumulative net CO2 emissions or the concentrations of CO2, methane, and nitrous oxide in the atmosphere.
+- The answer does not mention the increase in global mean sea level or changes in extreme weather events.
+- The answer does not mention the attribution of observed changes to human influence or the strengthening of evidence since the previous assessment report (AR5).

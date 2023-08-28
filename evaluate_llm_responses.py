@@ -116,7 +116,7 @@ def make_llm_evaluation_dataset_from_scratch():
     }
     evaluation_directories = {"summary" : "summarization/summary_evaluations", "qa" : "rag_qa/answer_evaluations"}
 
-    for evaluator in ["command"]:
+    for evaluator in ["llama2"]:
         for task in tasks:
             for data_num in range(n_data):
 

@@ -1,0 +1,3 @@
+ A-
+
+The summary accurately captures the key details from the article - the announcement of Python integration in Excel, the target users who can benefit, the ability to add Python code directly in cells, and the availability in the public preview. It highlights

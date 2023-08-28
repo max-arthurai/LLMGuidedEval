@@ -1,0 +1,3 @@
+ B
+
+The summary accurately captures the key points that Python functionality is being added to Excel, enabling Python code execution within spreadsheets. This allows data analysts and others to perform more advanced tasks in Excel using Python. The summary notes the integration is through

@@ -1,0 +1,1 @@
+Score: 9. The summary accurately captures the key points of the article, including the announcement of Python in Excel, its benefits for data analysts, engineers, marketers, and students, the integration of Python into the Excel grid, and the availability of

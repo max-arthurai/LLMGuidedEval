@@ -1,0 +1,3 @@
+Score: 9
+
+The summary provides a clear and accurate overview of the article. It includes all the key information, such as the release of a public preview of Python integration in Microsoft Excel, the benefits and capabilities it offers, the use of the

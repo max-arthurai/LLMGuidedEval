@@ -1,0 +1,10 @@
+Strengths:
+- The answer acknowledges the efforts to reduce the effects of human activities on the environment.
+- The answer accurately states that global warming is highly likely to surpass 1.5°C during the 21st century.
+- The answer correctly mentions that for every 1000 GtCO2 emitted by human activity, global surface temperature rises by 0.45°C.
+- The answer provides the range of global warming based on simulated scenarios for different carbon emissions scenarios.
+
+Weaknesses:
+- The answer does not provide a specific range for the near-term global warming, which is mentioned in the context.
+- The answer does not mention the remaining carbon budgets for limiting global warming to 1.5°C and 2°C, which are provided in the context.
+- The answer does not mention the influence of non-CO2 emissions reductions on the resulting temperatures and remaining carbon budgets.

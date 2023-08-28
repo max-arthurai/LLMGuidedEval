@@ -1,0 +1,9 @@
+Strengths:
+- The answer accurately reflects the information provided in the context.
+- It provides a range of possible temperature increases, indicating the uncertainty associated with different GHG emissions scenarios.
+
+Weaknesses:
+- The answer could be more specific by mentioning that the range of temperature increase refers to the period from 2081-2100.
+- It does not mention the specific emissions scenarios (SSP1-1.9, SSP2-4.5, SSP5-8.5) associated with the temperature ranges.
+- The answer does not address the time frame of "near term" (2021-2040) mentioned in the context.
+- It does not mention the likelihood of exceeding 1.5°C under higher emissions scenarios.

@@ -1,0 +1,9 @@
+Strengths:
+- The answer accurately states that global warming is likely to exceed 1.5°C by the end of the 21st century.
+- It correctly mentions the relationship between carbon emissions and temperature increase.
+- It provides specific temperature ranges based on different emissions scenarios.
+
+Weaknesses:
+- The answer could provide more context on the sources and evidence behind the statements made.
+- It does not mention the time frame within which the temperature increases are expected to occur.
+- The answer does not mention the remaining carbon budgets for different temperature targets.

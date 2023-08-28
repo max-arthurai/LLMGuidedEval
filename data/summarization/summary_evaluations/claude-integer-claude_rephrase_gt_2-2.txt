@@ -1,0 +1,7 @@
+ 9
+
+The summary accurately captures the key details from the article:
+
+- Python code can now be added directly to Excel spreadsheets with the new =PY function
+
+- This allows performing complex data analysis, machine learning, etc. using

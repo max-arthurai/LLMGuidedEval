@@ -1,0 +1,3 @@
+ Grade: C+. The summary provides some relevant information about the integration of Python in Microsoft Excel, but there are several errors and areas for improvement.
+
+Firstly, the summary incorrectly states that Python is a "characteristic" in

@@ -1,0 +1,3 @@
+ Grade: A-. The summary is mostly correct, but there are a few minor errors and some information is missing.
+
+The summary correctly states that Microsoft has announced the integration of Python into Microsoft Excel, allowing data analysts to write

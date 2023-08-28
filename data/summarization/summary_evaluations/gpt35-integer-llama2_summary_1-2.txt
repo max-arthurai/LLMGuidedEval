@@ -1,0 +1,1 @@
+Score: 8. The summary accurately captures the key points of the article, including the announcement of Python integration in Microsoft Excel, the use of Anaconda distribution and popular libraries, the execution of code on the Microsoft Cloud with security measures, and the

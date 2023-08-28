@@ -1,0 +1,3 @@
+ B+
+
+The summary accurately captures the key points that Python functionality is being integrated into Excel through a new function, allowing Python code execution within Excel worksheets with cloud computing for security. It mentions the target users of data analysts benefitting from this

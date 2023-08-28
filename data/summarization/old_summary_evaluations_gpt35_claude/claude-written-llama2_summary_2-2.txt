@@ -1,0 +1,23 @@
+ Here is my feedback on the summary:
+
+Strengths:
+
+- The summary accurately captures the key details from the article, including the announcement of Python integration in Excel, the ability to add Python code directly into cells, and the use of the Anaconda distribution. 
+
+- It highlights the enhanced capabilities enabled by Python, like advanced analytics and machine learning.
+
+- It notes the security measures in place, with code execution on the Microsoft Cloud. 
+
+- The summary is concise and easy to understand.
+
+Weaknesses:
+
+- The summary could provide more context on who will benefit from this new integration. The article mentions data analysts, engineers, marketers and students, which could be included.
+
+- The availability of the public preview being limited to Microsoft 365 Insiders using the Beta Channel is an important detail that is not mentioned. 
+
+- The summary states the Python code can be added directly into cells but does not specify this is done using the =PY function, an important detail.
+
+- The summary could explain why integrating Python into Excel is useful, rather than just the capabilities it enables.
+
+Overall, the summary covers the key points from the article accurately and concisely. Providing some additional context and

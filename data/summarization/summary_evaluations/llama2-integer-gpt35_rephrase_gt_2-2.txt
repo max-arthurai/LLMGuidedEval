@@ -1,0 +1,3 @@
+ Score: 8
+
+The summary provides a clear and concise overview of the recent development in Microsoft Excel, which allows users to execute Python code directly in the spreadsheet. The summary correctly highlights the main points, such as

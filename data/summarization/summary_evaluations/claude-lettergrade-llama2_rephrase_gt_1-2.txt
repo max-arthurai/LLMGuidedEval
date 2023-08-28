@@ -1,0 +1,3 @@
+ B+
+
+The summary accurately captures the key details about Python integration in Excel - mentioning it allows writing Python code in cells, leverages Anaconda distribution, runs securely on Microsoft Cloud, and targets data analysts. However, it misses some minor points

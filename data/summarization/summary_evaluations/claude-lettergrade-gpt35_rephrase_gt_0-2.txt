@@ -1,0 +1,5 @@
+ B
+
+The summary accurately captures the key points that Python is being integrated into Excel, allowing users to add Python code directly into cells to perform data analysis tasks. It mentions this runs on the Microsoft Cloud for security. 
+
+However, it is

@@ -1,0 +1,3 @@
+ Score: 8
+
+The summary provides a clear and concise overview of the article, accurately highlighting the main points and key information. It effectively conveys the excitement around the new integration of Python in Excel and the

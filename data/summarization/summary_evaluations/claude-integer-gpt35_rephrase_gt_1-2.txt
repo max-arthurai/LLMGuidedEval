@@ -1,0 +1,3 @@
+ 9
+
+The summary accurately captures the key details from the article - namely, that Microsoft Excel now allows users to run Python code directly in Excel spreadsheets through a new integration with the Python programming language. This enables more advanced data analysis capabilities. The

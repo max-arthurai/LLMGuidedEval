@@ -1,0 +1,9 @@
+Strengths:
+- The answer provides a clear summary of the key points from the context.
+- The answer includes relevant information about the near-term and long-term projections of global warming.
+- The answer mentions the estimated temperature increase per 1000 GtCO2 emitted and the remaining carbon budgets for different temperature targets.
+
+Weaknesses:
+- The answer could have provided more clarity on the timeframes for reaching different temperature thresholds (e.g., when is it likely to exceed 1.5°C in the near-term).
+- The answer could have mentioned that the projected temperature increase is based on different emissions scenarios and modelled pathways.
+- The answer could have provided more context on the potential impacts of different temperature increases on the Earth's climate and ecosystems.

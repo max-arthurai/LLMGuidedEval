@@ -1,0 +1,3 @@
+ A-
+
+The summary accurately captures the key details from the article - namely, that Microsoft is releasing a public preview of Python integration in Excel, allowing users to add Python code directly in spreadsheets to enable more advanced analytics capabilities. It mentions the

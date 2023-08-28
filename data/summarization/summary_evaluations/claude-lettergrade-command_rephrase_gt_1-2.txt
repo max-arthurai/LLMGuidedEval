@@ -1,0 +1,3 @@
+ B+
+
+The summary accurately captures the key points that Python support is now available in Excel, allowing users to execute Python code within spreadsheets. It mentions this enables more advanced analysis like machine learning while leveraging Python libraries. The summary states the
